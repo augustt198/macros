@@ -15,22 +15,20 @@ macro_rules! maybe(
 
 macro_rules! repeat(
     ($($body:expr $times:expr times),*) => ({
-        $(for x in range(0u, $times) { $body })*
+        $(
+            let mut _x = 0u;
+            while _x < $times {
+                $body ;
+                _x += 1;
+            }
+        )*
     });
-
-    ($body:block $times:expr times) => (
-        for x in range(0u, $times) $body
-    )
 )
 
 macro_rules! twice(
     ($($body:expr),*) => ({
         $($body; $body;)*
-    });
-
-    ($($body:block),*) => ({
-        $($body $body)*
-    });
+    });   
 )
 
 macro_rules! hash(
