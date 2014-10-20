@@ -1,4 +1,5 @@
 #![feature(macro_rules)]
+
 macro_rules! maybe(
     () => (
         std::rand::random::<bool>();
@@ -38,3 +39,31 @@ macro_rules! hash(
         _temp
     });
 )
+
+#[test]
+fn test_repeat() {
+    let mut count = 0u;
+
+    repeat! { (count += 1) 100 times }
+
+    assert!(count == 100)
+}
+
+#[test]
+fn twice_test() {
+    let mut count = 0u;
+
+    twice! { count += 1 }
+
+    assert!(count == 2)
+}
+
+#[test]
+fn hash_test() {
+    let mut hash1 = std::collections::HashMap::new();
+    hash1.insert("hello", "world");
+
+    let hash2 = hash! {"hello" => "world"};
+
+    assert!(hash1 == hash2);
+}
