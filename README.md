@@ -20,7 +20,8 @@ maybe! {
 
 ### Repetition
 
-The `repeat!` macro is called with the format: `repeat! { <block or expression> <expression> times }`
+The `repeat!` macro is called with the format: `repeat! { <block or expression> <expression> times }`.
+Multiple `<block or expression> <expression> times` groupings can be placed together in a `repeat!` macro, when seperated by a comma.
 
 ```rust
 repeat! {
