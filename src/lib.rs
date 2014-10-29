@@ -1,5 +1,8 @@
 #![feature(macro_rules)]
 
+// returns a random boolean when used with empty parameters
+// if supplied a block/expression, the block/expression is
+// called if a random boolean is true.
 macro_rules! maybe(
     () => (
         std::rand::random::<bool>();
@@ -14,6 +17,7 @@ macro_rules! maybe(
     );    
 )
 
+// repeat a block/expression a certain amount of times
 macro_rules! repeat(
     ($($body:expr $times:expr times),*) => ({
         $(
@@ -26,12 +30,14 @@ macro_rules! repeat(
     });
 )
 
+// repeat a block/expression twice
 macro_rules! twice(
     ($($body:expr),*) => ({
         $($body; $body;)*
     });   
 )
 
+// HashMap literal
 macro_rules! hash(
     ($($key:expr => $val:expr),*) => ({
         let mut _temp = std::collections::HashMap::new();
@@ -43,6 +49,15 @@ macro_rules! hash(
         std::collections::HashMap::<$key_type, $val_type>::new()
     )
 )
+
+macro_rules! t(
+    ($condition:expr ? $ifbranch:expr : $elsebranch:expr) => (
+        if $condition {
+            $ifbranch
+        } else {
+            $elsebranch
+        }
+    )
 )
 
 #[test]
@@ -80,3 +95,14 @@ fn hash_type_test() {
     assert!(hash1 == hash2);
 }
 
+#[test]
+fn ternary_true_expr_test() {
+    let num = t! { true ? 1i : 0i };
+    assert!(num == 1);
+}
+
+#[test]
+fn ternary_false_expr_test() {
+    let num = t! { false ? 1i : 0i };
+    assert!(num == 0);
+}
