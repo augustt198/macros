@@ -44,3 +44,17 @@ The `hash!` macro creates an `std::collections::HashMap` from `key => value` pai
 ```rust
 let hash = hash! {"January" => 0u, "February" => 1, "December" => 11};
 ```
+
+### Ternary operator
+
+Ternary operators have been removed from rust, but the `t!` macro can be used as a substitute using this syntax:
+
+```rust
+t! { conditional ? true_branch : false_branch }
+```
+
+For example:
+
+```rust
+let val = t! { maybe!() ? "yay" : "nay" }
+```
