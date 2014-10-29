@@ -38,6 +38,11 @@ macro_rules! hash(
         $(_temp.insert($key, $val);)*
         _temp
     });
+
+    ($key_type:ty , $val_type:ty) => (
+        std::collections::HashMap::<$key_type, $val_type>::new()
+    )
+)
 )
 
 #[test]
@@ -67,3 +72,11 @@ fn hash_test() {
 
     assert!(hash1 == hash2);
 }
+
+#[test]
+fn hash_type_test() {
+    let hash1 = std::collections::HashMap::<String, String>::new();
+    let hash2 = hash! { String, String };
+    assert!(hash1 == hash2);
+}
+
